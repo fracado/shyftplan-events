@@ -1,12 +1,14 @@
 import React from 'react';
+import Pagination from 'react-bootstrap/Pagination';
 
 type PaginationProps = {
     count: number,
     limit: number,
+    currentPage: number,
     handlePageChange: (pageNum: number) => void
 };
 
-const PaginationComponent = ({count, limit, handlePageChange}: PaginationProps): JSX.Element => {
+const PaginationComponent = ({count, limit,currentPage ,handlePageChange}: PaginationProps): JSX.Element => {
 
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(count / limit); i++) {
@@ -15,19 +17,20 @@ const PaginationComponent = ({count, limit, handlePageChange}: PaginationProps):
 
     const renderPageNumbers = pageNumbers.map((pageNum: number) => {
         return (
-            <button
-                type="button"
+            <Pagination.Item
+                key={pageNum}
+                active={pageNum === currentPage}
                 onClick={() => handlePageChange(pageNum)}
             >
                 {pageNum}
-            </button>
+            </Pagination.Item>
         );
     });
 
     return (
-        <>
+        <Pagination>
             {renderPageNumbers}
-        </>
+        </Pagination>
     );
 };
 

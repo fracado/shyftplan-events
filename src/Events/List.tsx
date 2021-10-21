@@ -49,7 +49,7 @@ const List = () => {
                 <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} />
             </InputGroup>
             <br />
-            <Pagination count={count} limit={limit} handlePageChange={handlePageChange} />
+            <Pagination count={count} limit={limit} currentPage={offset} handlePageChange={handlePageChange} />
             <Table striped hover>
                 <thead>
                 <tr>
