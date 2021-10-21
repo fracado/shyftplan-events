@@ -19,6 +19,10 @@ const List = () => {
             .then(() => setPending(false))
     }, [limit, offset]);
 
+    const handleLoadMore = () => {
+        setLimit(limit + 10);
+    };
+
     if (pending) {
         return <>
             Loading...
@@ -34,6 +38,9 @@ const List = () => {
                 id={event.id}
                 position={event.position}
             /> )}
+        <button type='button' onClick={handleLoadMore} disabled={events.length+1 === count}>
+            Load more
+        </button>
         </>
     )
 };
