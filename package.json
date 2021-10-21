@@ -2,11 +2,12 @@
   "name": "shyftplan-events",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://fracado.github.io/shyftplan-events",
+  "homepage": "https://fracado.github.io/shyftplan-events",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/gh-pages": "^3.2.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.33",
     "@types/react": "^17.0.31",
