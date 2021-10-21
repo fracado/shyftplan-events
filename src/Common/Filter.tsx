@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import doApiCall from "../helper/api";
-import EventProps from '../sharedTypes/eventType';
+import Event from '../sharedTypes/eventType';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
 type FilterProps = {
     limit: number,
     offset: number,
-    handleFilterChange: (events: EventProps[], count: number) => void,
+    handleFilterChange: (events: Event[], count: number) => void,
     handleErrors: (error: number) => void
 };
 

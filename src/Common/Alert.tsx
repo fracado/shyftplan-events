@@ -6,10 +6,10 @@ type AlertProps = {
     error: number,
 };
 
-const AlertMessage = (error: AlertProps) => {
+const AlertMessage = ({error}: AlertProps) => {
     return (
-        <Alert variant="danger" className="text-center">
-            {parseErrors(error.error)}
+        <Alert variant="danger" className="text-center" dismissible>
+            {parseErrors(error)}
         </Alert>
     )
 };
