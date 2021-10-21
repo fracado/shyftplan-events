@@ -4,6 +4,7 @@ import Event from '../sharedTypes/eventType';
 import ListItem from './ListItem';
 import Pagination from '../Common/Pagination';
 import Filter from '../Common/Filter';
+import { Button, Container, InputGroup, Table } from 'react-bootstrap';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
@@ -43,19 +44,35 @@ const List = () => {
 
     return (
         <>
-        <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} />
-        <br />
-        <Pagination count={count} limit={limit} handlePageChange={handlePageChange} />
-        {events.map((event) =>
-            <ListItem
-                startsAt={event.startsAt}
-                endsAt={event.endsAt}
-                id={event.id}
-                position={event.position}
-            /> )}
-        <button type='button' onClick={handleLoadMore} disabled={events.length+1 === count}>
-            Load more
-        </button>
+        <Container className="mt-3">
+            <InputGroup className="mb-3">
+                <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} />
+            </InputGroup>
+            <br />
+            <Pagination count={count} limit={limit} handlePageChange={handlePageChange} />
+            <Table striped hover>
+                <thead>
+                <tr>
+                    <th>Event Name</th>
+                    <th>Starts at</th>
+                    <th>Ends at</th>
+                </tr>
+                </thead>
+                <tbody>
+                {events.map((event) =>
+                    <ListItem
+                        startsAt={event.startsAt}
+                        endsAt={event.endsAt}
+                        id={event.id}
+                        position={event.position}
+                    />
+                )}
+                </tbody>
+            </Table>
+            <Button variant="primary" onClick={handleLoadMore} disabled={events.length+1 === count}>
+                Load More
+            </Button>
+        </Container>
         </>
     )
 };
