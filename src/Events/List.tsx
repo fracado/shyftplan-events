@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import doApiCall from '../helper/api';
+import Event from '../sharedTypes/eventType';
+import ListItem from './ListItem';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
@@ -25,8 +27,13 @@ const List = () => {
 
     return (
         <>
-        {events.map((event: Event) =>
-            <p>{event}</p> )}
+        {events.map((event) =>
+            <ListItem
+                startsAt={event.startsAt}
+                endsAt={event.endsAt}
+                id={event.id}
+                position={event.position}
+            /> )}
         </>
     )
 };
