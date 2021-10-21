@@ -1,12 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
+import List from './Events/List';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-
-    </div>
-  );
-}
+      <List />
+  )
+};
 
 export default App;
