@@ -3,6 +3,7 @@ import doApiCall from '../helper/api';
 import Event from '../sharedTypes/eventType';
 import ListItem from './ListItem';
 import Pagination from '../Common/Pagination';
+import Filter from '../Common/Filter';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
@@ -29,6 +30,11 @@ const List = () => {
         setLimit(10);
     };
 
+    const handleFilterChange = (events: Event[], count: number) => {
+        setEvents(events);
+        setCount(count);
+    };
+
     if (pending) {
         return <>
             Loading...
@@ -37,6 +43,8 @@ const List = () => {
 
     return (
         <>
+        <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} />
+        <br />
         <Pagination count={count} limit={limit} handlePageChange={handlePageChange} />
         {events.map((event) =>
             <ListItem
