@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import doApiCall from "../helper/api";
 import EventProps from '../sharedTypes/eventType';
+import {Button, Col, Form, Row} from 'react-bootstrap';
 
 type FilterProps = {
     limit: number,
@@ -20,35 +21,46 @@ const Filter = ({limit, offset, handleFilterChange}: FilterProps): JSX.Element =
         };
 
     return (
-        <>
-            <label htmlFor="start-at">Start at</label>
-            <input
-                type="datetime-local"
-                id="start-at"
-                name="start-at"
-                value={start}
-                onChange={e => setStart(e.target.value)}
-            />
-            <label htmlFor="end-at">End at</label>
-            <input
-                type="datetime-local"
-                id="end-at"
-                name="end-at"
-                value={end}
-                min={start}
-                onChange={e => setEnd(e.target.value)}
-            />
-            <button type='button' onClick={() => handleDateTimeFilter(filterQuery)}>
-                Filter
-            </button>
-            <button type='button' onClick={() => {
+        <Form id="filter-form">
+            <Form.Label as="h6">Filter</Form.Label>
+            <Form.Text className="text-muted pb-2">Select date and time range</Form.Text>
+            <Row className="mt-3">
+                <Form.Group as={Row} controlId="start-at" className="mb-3">
+                    <Form.Label column>Starts at</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default"
+                            as="input"
+                            type="datetime-local"
+                            name="start-at"
+                            value={start}
+                            onChange={e => setStart(e.target.value)}
+                        />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} controlId="end-at" className="mb-3">
+                    <Form.Label column>Ends at</Form.Label>
+                    <Col sm={10}>
+                        <Form.Control
+                            aria-label="Default"
+                            aria-describedby="inputGroup-sizing-default"
+                            as="input"
+                            type="datetime-local"
+                            name="end-at"
+                            value={end}
+                            onChange={e => setEnd(e.target.value)}
+                        />
+                    </Col>
+                </Form.Group>
+            </Row>
+            <Button variant="primary" onClick={() => handleDateTimeFilter(filterQuery)}>Filter</Button>
+            <Button className='m-3' variant="light" onClick={() => {
                 setStart("");
                 setEnd("");
                 handleDateTimeFilter(null);
-            }}>
-                Clear Filter
-            </button>
-        </>
+            }}>Clear Filter</Button>
+        </Form>
     );
 };
 
