@@ -6,7 +6,7 @@ import Pagination from '../Common/Pagination';
 import Filter from '../Common/Filter';
 import AlertMessage from '../Common/Alert';
 import Header from '../Common/Header';
-import { Button, Container, InputGroup, Table } from 'react-bootstrap';
+import { Button, Container, InputGroup, Spinner, Table } from 'react-bootstrap';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
@@ -46,9 +46,11 @@ const List = () => {
     };
 
     if (pending) {
-        return <>
-            Loading...
-        </>;
+        return <Container id="spinner-container" className="d-flex align-items-center justify-content-center mt-10">
+            <Spinner id="spinner" animation="border" role="status" variant="primary">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        </Container>
     }
 
     return (

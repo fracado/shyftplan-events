@@ -21,3 +21,13 @@ code {
   border-radius: 5px;
   padding: 10px;
 }
+
+#spinner-container {
+  height: 400px;
+  position: relative;
+}
+
+#spinner {
+  position: absolute;
+  top: 50%;
+}
