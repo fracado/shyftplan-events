@@ -5,6 +5,7 @@ import moment from 'moment';
 import Event from '../sharedTypes/eventType';
 import Employee from '../sharedTypes/employeeType';
 import AlertMessage from '../Common/Alert';
+import Header from '../Common/Header';
 import {Row, Col, Container, Card, ListGroup, Button} from 'react-bootstrap';
 
 type EventDetailProps = {
@@ -44,6 +45,7 @@ const Detail = (props: EventDetailProps) => {
 
     return (
         <>
+            <Header />
             {errors && <AlertMessage error={errors} />}
             <Container className="mt-3">
                 <ListGroup variant="flush">

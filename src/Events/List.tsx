@@ -5,6 +5,7 @@ import ListItem from './ListItem';
 import Pagination from '../Common/Pagination';
 import Filter from '../Common/Filter';
 import AlertMessage from '../Common/Alert';
+import Header from '../Common/Header';
 import { Button, Container, InputGroup, Table } from 'react-bootstrap';
 
 const List = () => {
@@ -52,6 +53,7 @@ const List = () => {
 
     return (
         <>
+        <Header />
         {errors && <AlertMessage error={errors} />}
         <Container className="mt-3">
             <InputGroup className="mb-3">
