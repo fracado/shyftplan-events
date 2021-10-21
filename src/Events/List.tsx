@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import doApiCall from '../helper/api';
 import Event from '../sharedTypes/eventType';
 import ListItem from './ListItem';
+import Pagination from '../Common/Pagination';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
@@ -23,6 +24,11 @@ const List = () => {
         setLimit(limit + 10);
     };
 
+    const handlePageChange = (pageNum: number) => {
+        setOffset(pageNum);
+        setLimit(10);
+    };
+
     if (pending) {
         return <>
             Loading...
@@ -31,6 +37,7 @@ const List = () => {
 
     return (
         <>
+        <Pagination count={count} limit={limit} handlePageChange={handlePageChange} />
         {events.map((event) =>
             <ListItem
                 startsAt={event.startsAt}
