@@ -7,9 +7,10 @@ type FilterProps = {
     limit: number,
     offset: number,
     handleFilterChange: (events: EventProps[], count: number) => void,
+    handleErrors: (error: number) => void
 };
 
-const Filter = ({limit, offset, handleFilterChange}: FilterProps): JSX.Element => {
+const Filter = ({limit, offset, handleFilterChange, handleErrors}: FilterProps): JSX.Element => {
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
 
@@ -17,7 +18,9 @@ const Filter = ({limit, offset, handleFilterChange}: FilterProps): JSX.Element =
 
     const handleDateTimeFilter = (filterQuery: string|null) => {
         doApiCall(`events?limit=${limit}&offset=${offset}`+filterQuery)
-            .then((response) => handleFilterChange(response.items, response.pagination.count))
+            .then((response) => {
+                response.items ? handleFilterChange(response.items, response.pagination.count) : handleErrors(response)
+            })
         };
 
     return (

@@ -4,6 +4,7 @@ import Event from '../sharedTypes/eventType';
 import ListItem from './ListItem';
 import Pagination from '../Common/Pagination';
 import Filter from '../Common/Filter';
+import AlertMessage from '../Common/Alert';
 import { Button, Container, InputGroup, Table } from 'react-bootstrap';
 
 const List = () => {
@@ -12,12 +13,15 @@ const List = () => {
     const [count, setCount] = useState(0);
     const [events, setEvents] = useState<Event[]>([]);
     const [pending, setPending] = useState(true);
+    const [errors, setErrors] = useState<number|null>(null);
 
     useEffect(() => {
         doApiCall(`events?limit=${limit}&offset=${offset}`)
             .then((response) => {
-                setEvents(response.items);
-                setCount(response.pagination.count);
+                if (response.items) {
+                    setEvents(response.items);
+                    setCount(response.pagination.count);
+                } else handleErrors(response)
             })
             .then(() => setPending(false))
     }, [limit, offset]);
@@ -36,6 +40,10 @@ const List = () => {
         setCount(count);
     };
 
+    const handleErrors = (error: number) => {
+        setErrors(error);
+    };
+
     if (pending) {
         return <>
             Loading...
@@ -44,9 +52,10 @@ const List = () => {
 
     return (
         <>
+        {errors && <AlertMessage error={errors} />}
         <Container className="mt-3">
             <InputGroup className="mb-3">
-                <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} />
+                <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} handleErrors={handleErrors} />
             </InputGroup>
             <br />
             <Pagination count={count} limit={limit} currentPage={offset} handlePageChange={handlePageChange} />
