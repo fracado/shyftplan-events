@@ -51,6 +51,7 @@ const Filter = ({limit, offset, handleFilterChange, handleErrors}: FilterProps):
                             as="input"
                             type="datetime-local"
                             name="end-at"
+                            min={start}
                             value={end}
                             onChange={e => setEnd(e.target.value)}
                         />
