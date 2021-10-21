@@ -19,9 +19,9 @@ const Filter = ({limit, offset, handleFilterChange, handleErrors}: FilterProps):
     const handleDateTimeFilter = (filterQuery: string|null) => {
         doApiCall(`events?limit=${limit}&offset=${offset}`+filterQuery)
             .then((response) => {
-                response.items ? handleFilterChange(response.items, response.pagination.count) : handleErrors(response)
+                (response && response.items) ? handleFilterChange(response.items, response.pagination.count) : handleErrors(response)
             })
-        };
+    };
 
     return (
         <Form id="filter-form">

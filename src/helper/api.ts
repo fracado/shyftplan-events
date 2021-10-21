@@ -9,6 +9,6 @@ export default function doApiCall(path: string) {
     return fetch(url, {method:'GET',
         headers: headers,
     })
-        .then((response) => response.json())
+        .then((response) => response.status === 200 ? response.json() : response.status)
         .catch((err) => console.log(err));
 }
