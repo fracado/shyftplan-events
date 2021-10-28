@@ -10,12 +10,13 @@ import { Button, Container, InputGroup, Spinner, Table } from 'react-bootstrap';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
-    const [offset, setOffset] = useState(1);
+    const [offset, setOffset] = useState(0);
     const [count, setCount] = useState(0);
     const [events, setEvents] = useState<Event[]>([]);
     const [pending, setPending] = useState(true);
     const [errors, setErrors] = useState<number|null>(null);
     const [filterQuery, setFilterQuery] = useState<string|null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
         doApiCall(`events?limit=${limit}&offset=${offset}`+filterQuery)
@@ -33,7 +34,8 @@ const List = () => {
     };
 
     const handlePageChange = (pageNum: number) => {
-        setOffset(pageNum);
+        setCurrentPage(pageNum);
+        setOffset((pageNum-1) * limit);
         setLimit(10);
     };
 
@@ -62,7 +64,7 @@ const List = () => {
                 <Filter handleFilterChange={handleFilterChange} />
             </InputGroup>
             <br />
-            <Pagination count={count} limit={limit} currentPage={offset} handlePageChange={handlePageChange} />
+            <Pagination count={count} limit={limit} currentPage={currentPage} handlePageChange={handlePageChange} />
             <Table striped hover>
                 <thead>
                 <tr>
