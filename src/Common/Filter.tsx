@@ -1,27 +1,15 @@
 import React, {useState} from 'react';
-import doApiCall from "../helper/api";
-import Event from '../sharedTypes/eventType';
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
 type FilterProps = {
-    limit: number,
-    offset: number,
-    handleFilterChange: (events: Event[], count: number) => void,
-    handleErrors: (error: number) => void
+    handleFilterChange: (filterQuery: string|null) => void,
 };
 
-const Filter = ({limit, offset, handleFilterChange, handleErrors}: FilterProps): JSX.Element => {
+const Filter = ({handleFilterChange}: FilterProps): JSX.Element => {
     const [start, setStart] = useState("");
     const [end, setEnd] = useState("");
 
     const filterQuery = `&startsAt=${start}&endsAt=${end}`;
-
-    const handleDateTimeFilter = (filterQuery: string|null) => {
-        doApiCall(`events?limit=${limit}&offset=${offset}`+filterQuery)
-            .then((response) => {
-                (response && response.items) ? handleFilterChange(response.items, response.pagination.count) : handleErrors(response)
-            })
-    };
 
     return (
         <Form id="filter-form">
@@ -58,11 +46,11 @@ const Filter = ({limit, offset, handleFilterChange, handleErrors}: FilterProps):
                     </Col>
                 </Form.Group>
             </Row>
-            <Button variant="primary" onClick={() => handleDateTimeFilter(filterQuery)}>Filter</Button>
+            <Button variant="primary" onClick={() => handleFilterChange(filterQuery)}>Filter</Button>
             <Button className='m-3' variant="light" onClick={() => {
                 setStart("");
                 setEnd("");
-                handleDateTimeFilter(null);
+                handleFilterChange(null);
             }}>Clear Filter</Button>
         </Form>
     );
