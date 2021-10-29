@@ -16,7 +16,7 @@ const ListItem = ({startsAt, endsAt, id, position}: Event): JSX.Element => {
     };
 
     return (
-        <tr className='list-item' onClick={handleClick}>
+        <tr className='list-item' role="button" tabIndex={0} onClick={handleClick}>
             <td>{position?.name}</td>
             <td>{moment(startsAt).format('DD.MM.YYYY HH:mm')}</td>
             <td>{moment(endsAt).format('DD.MM.YYYY HH:mm')}</td>

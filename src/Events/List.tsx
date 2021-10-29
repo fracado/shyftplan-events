@@ -10,14 +10,16 @@ import { Button, Container, InputGroup, Spinner, Table } from 'react-bootstrap';
 
 const List = () => {
     const [limit, setLimit] = useState(10);
-    const [offset, setOffset] = useState(1);
+    const [offset, setOffset] = useState(0);
     const [count, setCount] = useState(0);
     const [events, setEvents] = useState<Event[]>([]);
     const [pending, setPending] = useState(true);
     const [errors, setErrors] = useState<number|null>(null);
+    const [filterQuery, setFilterQuery] = useState<string|null>(null);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
-        doApiCall(`events?limit=${limit}&offset=${offset}`)
+        doApiCall(`events?limit=${limit}&offset=${offset}`+filterQuery)
             .then((response) => {
                 if (response.items) {
                     setEvents(response.items);
@@ -25,20 +27,20 @@ const List = () => {
                 } else handleErrors(response)
             })
             .then(() => setPending(false))
-    }, [limit, offset]);
+    }, [limit, offset, filterQuery]);
 
     const handleLoadMore = () => {
         setLimit(limit + 10);
     };
 
     const handlePageChange = (pageNum: number) => {
-        setOffset(pageNum);
+        setCurrentPage(pageNum);
+        setOffset((pageNum-1) * limit);
         setLimit(10);
     };
 
-    const handleFilterChange = (events: Event[], count: number) => {
-        setEvents(events);
-        setCount(count);
+    const handleFilterChange = (filterQuery: string|null) => {
+        setFilterQuery(filterQuery);
     };
 
     const handleErrors = (error: number) => {
@@ -59,10 +61,10 @@ const List = () => {
         {errors && <AlertMessage error={errors} />}
         <Container className="mt-3">
             <InputGroup className="mb-3">
-                <Filter limit={limit} offset={offset} handleFilterChange={handleFilterChange} handleErrors={handleErrors} />
+                <Filter handleFilterChange={handleFilterChange} />
             </InputGroup>
             <br />
-            <Pagination count={count} limit={limit} currentPage={offset} handlePageChange={handlePageChange} />
+            <Pagination count={count} limit={limit} currentPage={currentPage} handlePageChange={handlePageChange} />
             <Table striped hover>
                 <thead>
                 <tr>
